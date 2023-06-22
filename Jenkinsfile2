@@ -3,7 +3,7 @@ pipeline {
     stages{
         stage ('Deploy to stage environment'){
             steps {
-                sshagent(['jenkins_key']) {
+                sshagent(['jenkins-key']) {
                     sh 'ssh -t -t ubuntu@10.0.2.21 -o StrictHostKeyChecking=no "ansible-playbook -i /etc/ansible/stage_hosts /home/ubuntu/playbooks/stage_auto_discovery.yml && ansible-playbook -i /etc/ansible/stage_hosts /home/ubuntu/playbooks/deployment.yml"'
                 }
             }
@@ -29,7 +29,7 @@ pipeline {
         }
         stage ('Deploy to production environment'){
             steps{
-                sshagent(['jenkins_key']) {
+                sshagent(['jenkins-key']) {
                     sh 'ssh -t -t ubuntu@10.0.2.21 -o StrictHostKeyChecking=no "ansible-playbook -i /etc/ansible/hosts /home/ubuntu/playbooks/prod_auto_discovery.yml && ansible-playbook -i /etc/ansible/hosts /home/ubuntu/playbooks/deployment.yml && ansible-playbook -i /etc/ansible/hosts /home/ubuntu/playbooks/monitoring.yml"'
                 }
             }
