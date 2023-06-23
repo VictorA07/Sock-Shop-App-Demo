@@ -8,13 +8,13 @@ pipeline {
                 }
             }
         }
-        // stage ('Continous Testing'){
-        //     steps {
-        //         sshagent(['QAkey']) {
-        //             sh 'ssh -t -t ec2-user@10.0.3.146 -o StrictHostKeyChecking=no "rm -rvf /home/ec2-user/FunctionalTesting && git clone https://github.com/Daicon001/FunctionalTesting && java -jar /home/ec2-user/FunctionalTesting/k8FunctionalTest12.jar"'
-        //         }
-        //     }
-        // }
+         stage ('Continous Testing'){
+             steps {
+                 sshagent(['QAkey']) {
+                     sh 'ssh -t -t ec2-user@35.177.238.194 -o StrictHostKeyChecking=no "rm -rvf /home/ec2-user/FunctionalTesting && git clone https://github.com/Daicon001/FunctionalTesting && java -jar /home/ec2-user/FunctionalTesting/k8FunctionalTest12.jar"'
+                 }
+             }
+         }
         stage('Send Notification'){
             steps{
                 slackSend channel: 'jenkin-alert', message: 'App was deployed to staging environment and continuous testing was successfull. Needs approval to deploy to prod envrionment', teamDomain: 'Cloudhight', tokenCredentialId: 'slack-cred'
